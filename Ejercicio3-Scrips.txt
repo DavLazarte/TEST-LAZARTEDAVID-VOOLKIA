@@ -1,0 +1,37 @@
+Grails
+
+import me.*;
+def upsPullTrkService = ctx.getBean('upsPullTrkService')
+def s = Shipment.get(27528954729)
+def tn = s.trackingNumber
+def trackingData = upsPullTrkService.getTrkEvents([tn])
+trackingData.each { td ->
+println "------------------------------------------------"
+println "${td.sucursal} - ${td.eventDate} - ${td.description}"
+}
+"Done"
+
+1.  A tu entender, que se busca obtener como output del script?
+
+el resultado esperado del output para mi es conocer el envio de manera detallada
+la sucursal, fecha,  y una descripción del seguimiento.
+
+---------------------------------------------------------------
+
+Bash 
+
+#!/bin/bash -> por defecto para bash.
+users_id=(71665538 66146765 132961968 15096445 172753273 54152646)-> se Declara una variable con los diferentes ID
+for users_id in ${users_id[*]} -> for do para iterar cada usuario.
+do -> palabra clave
+curl=$(curl -s "api.mercadolibre.com/users/$users_id/shipping_preferences" | jq -c
+'.services') -> crea una variable curl donde se accede a la API de mercadolibre con ID variable y aceede a los servicios
+echo "$users_id: $curl"->  muestra cada iteración que contiene el users_id y la variable de curl con el servicio accedido con el id
+done ->fin del bucle
+
+1)  a mi entender se busca como output que se impriman los users_id y que se acceda a la API de mercadolibre para traer los servicios y preferencias de dicho ID
+
+2)  Se muestran 6 lineas 1 por cada ID
+
+
+   
